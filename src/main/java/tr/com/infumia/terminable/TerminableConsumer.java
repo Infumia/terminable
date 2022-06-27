@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 @FunctionalInterface
 @SuppressWarnings("UnusedReturnValue")
 public interface TerminableConsumer {
-
   /**
    * binds the terminable.
    *
@@ -20,9 +19,7 @@ public interface TerminableConsumer {
    */
   @NotNull
   @Contract("_ -> param1")
-  <T extends AutoCloseable> T bind(
-    @NotNull T terminable
-  );
+  <T extends AutoCloseable> T bind(@NotNull T terminable);
 
   /**
    * binds the module.
@@ -34,9 +31,7 @@ public interface TerminableConsumer {
    */
   @NotNull
   @Contract("_ -> param1")
-  default <T extends TerminableModule> T bindModule(
-    @NotNull final T module
-  ) {
+  default <T extends TerminableModule> T bindModule(@NotNull final T module) {
     module.setup(this);
     return module;
   }

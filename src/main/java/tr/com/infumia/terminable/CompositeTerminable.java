@@ -14,8 +14,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * an interface to determine composite terminable.
  */
-public interface CompositeTerminable extends Terminable, TerminableConsumer, Reset {
-
+public interface CompositeTerminable
+  extends Terminable, TerminableConsumer, Reset {
   /**
    * creates a simple composite terminable.
    *
@@ -28,9 +28,7 @@ public interface CompositeTerminable extends Terminable, TerminableConsumer, Res
 
   @NotNull
   @Override
-  default <T extends AutoCloseable> T bind(
-    @NotNull final T terminable
-  ) {
+  default <T extends AutoCloseable> T bind(@NotNull final T terminable) {
     this.with(terminable);
     return terminable;
   }
@@ -69,9 +67,7 @@ public interface CompositeTerminable extends Terminable, TerminableConsumer, Res
    */
   @NotNull
   @Contract("_ -> this")
-  CompositeTerminable with(
-    @NotNull AutoCloseable closeable
-  );
+  CompositeTerminable with(@NotNull AutoCloseable closeable);
 
   /**
    * binds all the closeable.
@@ -142,14 +138,14 @@ public interface CompositeTerminable extends Terminable, TerminableConsumer, Res
     @Override
     public void reset() {
       this.closeables.removeIf(closeable -> {
-        if (!(closeable instanceof Terminable terminable)) {
-          return false;
-        }
-        if (closeable instanceof Reset reset) {
-          reset.reset();
-        }
-        return terminable.closed();
-      });
+          if (!(closeable instanceof Terminable terminable)) {
+            return false;
+          }
+          if (closeable instanceof Reset reset) {
+            reset.reset();
+          }
+          return terminable.closed();
+        });
     }
   }
 }

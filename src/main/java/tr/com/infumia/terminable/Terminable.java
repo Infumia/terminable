@@ -8,15 +8,12 @@ import org.jetbrains.annotations.NotNull;
  */
 @FunctionalInterface
 public interface Terminable extends AutoCloseable {
-
   /**
    * binds with the consumer.
    *
    * @param consumer the consumer to bind.
    */
-  default void bindWith(
-    @NotNull final TerminableConsumer consumer
-  ) {
+  default void bindWith(@NotNull final TerminableConsumer consumer) {
     consumer.bind(this);
   }
 
