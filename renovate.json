@@ -4,7 +4,7 @@
   ],
   "labels": ["dependencies"],
   "schedule": [
-    "on monday after 9am"
+    "after 9am"
   ],
   "regexManagers": [
     {
