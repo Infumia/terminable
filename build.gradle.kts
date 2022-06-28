@@ -100,7 +100,7 @@ publishing {
       artifact(tasks["sourcesJar"])
       artifact(tasks["javadocJar"])
       pom {
-        name.set("Salmi")
+        name.set("Terminable")
         description.set("Fully Customizable Tab plugin for Velocity servers.")
         url.set("https://infumia.com.tr/")
         licenses {
