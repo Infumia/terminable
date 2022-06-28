@@ -100,7 +100,7 @@ publishing {
       artifact(tasks["sourcesJar"])
       artifact(tasks["javadocJar"])
       pom {
-        name.set("Salmi")
+        name.set("Terminable")
         description.set("Fully Customizable Tab plugin for Velocity servers.")
         url.set("https://infumia.com.tr/")
         licenses {
@@ -117,9 +117,9 @@ publishing {
           }
         }
         scm {
-          connection.set("scm:git:git://github.com/infumia/salmi.git")
-          developerConnection.set("scm:git:ssh://github.com/infumia/salmi.git")
-          url.set("https://github.com/infumia/salmi")
+          connection.set("scm:git:git://github.com/infumia/terminable.git")
+          developerConnection.set("scm:git:ssh://github.com/infumia/terminable.git")
+          url.set("https://github.com/infumia/terminable")
         }
       }
     }
@@ -133,7 +133,6 @@ publishing {
     }
   }
 }
-
 
 nexusPublishing {
   repositories {
