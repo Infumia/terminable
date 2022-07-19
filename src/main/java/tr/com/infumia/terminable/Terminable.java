@@ -18,6 +18,11 @@ public interface Terminable extends AutoCloseable {
   }
 
   /**
+   * closes if needed.
+   */
+  default void closeIfNeeded() {}
+
+  /**
    * closes the returns the exception if occurs.
    *
    * @return occurred exception when closing.
