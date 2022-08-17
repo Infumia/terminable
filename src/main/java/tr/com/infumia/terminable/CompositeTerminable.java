@@ -59,6 +59,13 @@ public interface CompositeTerminable
   }
 
   /**
+   * closes the specific closeable object.
+   *
+   * @param closeable the closeable to close.
+   */
+  void closeSpecific(@NotNull AutoCloseable closeable);
+
+  /**
    * binds the closeable.
    *
    * @param closeable the closeable to bind.
@@ -126,6 +133,21 @@ public interface CompositeTerminable
       if (!caught.isEmpty()) {
         throw new CompositeClosingException(caught);
       }
+    }
+
+    @Override
+    public void closeSpecific(@NotNull final AutoCloseable closeable) {
+      this.closeables.removeIf(c -> {
+          final var check = c.equals(closeable);
+          if (check) {
+            try {
+              c.close();
+            } catch (final Exception e) {
+              e.printStackTrace();
+            }
+          }
+          return check;
+        });
     }
 
     @NotNull
