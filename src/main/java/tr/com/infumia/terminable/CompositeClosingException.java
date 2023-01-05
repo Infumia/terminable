@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Collections;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
  * an exception class thrown to propagate exceptions thrown by composite terminable.
  */
 @Getter
-@Accessors(fluent = true)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public final class CompositeClosingException extends Exception {
 
@@ -27,9 +25,7 @@ public final class CompositeClosingException extends Exception {
    *
    * @param causes the causes.
    */
-  public CompositeClosingException(
-    @NotNull final Collection<? extends Throwable> causes
-  ) {
+  public CompositeClosingException(@NotNull final Collection<? extends Throwable> causes) {
     super("Exception(s) occurred whilst closing: " + causes);
     if (causes.isEmpty()) {
       throw new IllegalStateException("No causes");
