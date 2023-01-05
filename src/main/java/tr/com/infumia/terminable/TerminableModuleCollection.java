@@ -36,5 +36,9 @@ public interface TerminableModuleCollection extends TerminableModule {
 
     @NotNull
     List<TerminableModule> modules;
+
+    protected Base(@NotNull final TerminableModule... modules) {
+      this(List.of(modules));
+    }
   }
 }
