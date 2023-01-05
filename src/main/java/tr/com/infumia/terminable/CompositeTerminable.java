@@ -14,8 +14,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * an interface to determine composite terminable.
  */
-public interface CompositeTerminable
-  extends Terminable, TerminableConsumer, Reset {
+public interface CompositeTerminable extends Terminable, TerminableConsumer, Reset {
   /**
    * creates a simple composite terminable.
    *
@@ -65,8 +64,7 @@ public interface CompositeTerminable
    *
    * @throws CompositeClosingException if something goes wrong when closing it.
    */
-  void closeSpecific(@NotNull AutoCloseable closeable)
-    throws CompositeClosingException;
+  void closeSpecific(@NotNull AutoCloseable closeable) throws CompositeClosingException;
 
   /**
    * binds the closeable.
@@ -88,9 +86,7 @@ public interface CompositeTerminable
    */
   @NotNull
   @Contract("_ -> this")
-  default CompositeTerminable withAll(
-    @NotNull final AutoCloseable... closeables
-  ) {
+  default CompositeTerminable withAll(@NotNull final AutoCloseable... closeables) {
     return this.withAll(List.of(closeables));
   }
 
@@ -103,9 +99,7 @@ public interface CompositeTerminable
    */
   @NotNull
   @Contract("_ -> this")
-  default CompositeTerminable withAll(
-    @NotNull final Iterable<? extends AutoCloseable> closeables
-  ) {
+  default CompositeTerminable withAll(@NotNull final Iterable<? extends AutoCloseable> closeables) {
     closeables.forEach(this::with);
     return this;
   }
