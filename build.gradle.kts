@@ -29,21 +29,20 @@ tasks {
   }
 
   val javadocJar by
-      creating(Jar::class) {
-        dependsOn("javadoc")
-        archiveClassifier.set("javadoc")
-        from(javadoc)
-      }
+    creating(Jar::class) {
+      dependsOn("javadoc")
+      archiveClassifier.set("javadoc")
+      from(javadoc)
+    }
 
   val sourcesJar by
-      creating(Jar::class) {
-        dependsOn("classes")
-        archiveClassifier.set("sources")
-        from(sourceSets["main"].allSource)
-      }
+    creating(Jar::class) {
+      dependsOn("classes")
+      archiveClassifier.set("sources")
+      from(sourceSets["main"].allSource)
+    }
 
   build {
-    dependsOn(spotlessApply)
     dependsOn(jar)
     dependsOn(sourcesJar)
     dependsOn(javadocJar)
@@ -64,38 +63,38 @@ dependencies {
 publishing {
   publications {
     val publication =
-        create<MavenPublication>("mavenJava") {
-          groupId = project.group.toString()
-          artifactId = "terminable"
-          version = project.version.toString()
+      create<MavenPublication>("mavenJava") {
+        groupId = project.group.toString()
+        artifactId = "terminable"
+        version = project.version.toString()
 
-          from(components["java"])
-          artifact(tasks["sourcesJar"])
-          artifact(tasks["javadocJar"])
-          pom {
-            name.set("Terminable")
-            description.set("A Java library for terminable objects.")
-            url.set("https://infumia.com.tr/")
-            licenses {
-              license {
-                name.set("MIT License")
-                url.set("https://mit-license.org/license.txt")
-              }
-            }
-            developers {
-              developer {
-                id.set("portlek")
-                name.set("Hasan Demirtaş")
-                email.set("utsukushihito@outlook.com")
-              }
-            }
-            scm {
-              connection.set("scm:git:git://github.com/infumia/terminable.git")
-              developerConnection.set("scm:git:ssh://github.com/infumia/terminable.git")
-              url.set("https://github.com/infumia/terminable")
+        from(components["java"])
+        artifact(tasks["sourcesJar"])
+        artifact(tasks["javadocJar"])
+        pom {
+          name.set("Terminable")
+          description.set("A Java library for terminable objects.")
+          url.set("https://infumia.com.tr/")
+          licenses {
+            license {
+              name.set("MIT License")
+              url.set("https://mit-license.org/license.txt")
             }
           }
+          developers {
+            developer {
+              id.set("portlek")
+              name.set("Hasan Demirtaş")
+              email.set("utsukushihito@outlook.com")
+            }
+          }
+          scm {
+            connection.set("scm:git:git://github.com/infumia/terminable.git")
+            developerConnection.set("scm:git:ssh://github.com/infumia/terminable.git")
+            url.set("https://github.com/infumia/terminable")
+          }
         }
+      }
 
     signing {
       isRequired = signRequired
@@ -107,7 +106,7 @@ publishing {
   }
 }
 
-nexusPublishing { repositories { sonatype() } }
+nexusPublishing.repositories.sonatype()
 
 spotless {
   lineEndings = LineEnding.UNIX

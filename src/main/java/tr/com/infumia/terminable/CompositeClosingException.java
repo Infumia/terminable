@@ -38,7 +38,7 @@ public final class CompositeClosingException extends Exception {
    */
   public void printAllStackTraces() {
     this.printStackTrace();
-    for (final var cause : this.causes) {
+    for (final Throwable cause : this.causes) {
       cause.printStackTrace();
     }
   }

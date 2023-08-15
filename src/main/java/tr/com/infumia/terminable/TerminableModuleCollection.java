@@ -21,7 +21,7 @@ public interface TerminableModuleCollection extends TerminableModule {
 
   @Override
   default void setup(@NotNull final TerminableConsumer consumer) {
-    for (final var module : this.modules()) {
+    for (final TerminableModule module : this.modules()) {
       module.bindModuleWith(consumer);
     }
   }
