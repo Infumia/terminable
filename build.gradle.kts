@@ -74,7 +74,7 @@ publishing {
           artifact(tasks["javadocJar"])
           pom {
             name.set("Terminable")
-            description.set("Fully Customizable Tab plugin for Velocity servers.")
+            description.set("A Java library for terminable objects.")
             url.set("https://infumia.com.tr/")
             licenses {
               license {
