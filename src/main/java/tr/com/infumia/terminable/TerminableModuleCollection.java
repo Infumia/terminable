@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
  * an interface to determine terminable module collection.
  */
 public interface TerminableModuleCollection extends TerminableModule {
-
   /**
    * gets the modules.
    *
