@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -113,13 +112,12 @@ public interface CompositeTerminable extends Terminable, TerminableConsumer, Res
    * a simple implementation for {@link CompositeTerminable}.
    */
   @NoArgsConstructor(access = AccessLevel.PRIVATE)
-  @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
   final class Simple implements CompositeTerminable {
 
     /**
      * the closeables.
      */
-    Deque<AutoCloseable> closeables = new ConcurrentLinkedDeque<>();
+    private final Deque<AutoCloseable> closeables = new ConcurrentLinkedDeque<>();
 
     @Override
     public void close() throws CompositeClosingException {
