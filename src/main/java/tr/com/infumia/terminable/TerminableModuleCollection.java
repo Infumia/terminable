@@ -1,10 +1,10 @@
 package tr.com.infumia.terminable;
 
+import java.util.Arrays;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -21,7 +21,7 @@ public interface TerminableModuleCollection extends TerminableModule {
 
   @Override
   default void setup(@NotNull final TerminableConsumer consumer) {
-    for (final var module : this.modules()) {
+    for (final TerminableModule module : this.modules()) {
       module.bindModuleWith(consumer);
     }
   }
@@ -31,14 +31,18 @@ public interface TerminableModuleCollection extends TerminableModule {
    */
   @Getter
   @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-  @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
   abstract class Base implements TerminableModuleCollection {
 
     @NotNull
-    List<TerminableModule> modules;
+    private final List<TerminableModule> modules;
 
+    /**
+     * ctor.
+     *
+     * @param modules The modules to bind.
+     */
     protected Base(@NotNull final TerminableModule... modules) {
-      this(List.of(modules));
+      this(Arrays.asList(modules));
     }
   }
 }

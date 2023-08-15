@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -87,7 +86,10 @@ public interface CompositeTerminable extends Terminable, TerminableConsumer, Res
   @NotNull
   @Contract("_ -> this")
   default CompositeTerminable withAll(@NotNull final AutoCloseable... closeables) {
-    return this.withAll(List.of(closeables));
+    for (final AutoCloseable closeable : closeables) {
+      this.with(closeable);
+    }
+    return this;
   }
 
   /**
@@ -100,7 +102,9 @@ public interface CompositeTerminable extends Terminable, TerminableConsumer, Res
   @NotNull
   @Contract("_ -> this")
   default CompositeTerminable withAll(@NotNull final Iterable<? extends AutoCloseable> closeables) {
-    closeables.forEach(this::with);
+    for (final AutoCloseable closeable : closeables) {
+      this.with(closeable);
+    }
     return this;
   }
 
@@ -108,17 +112,16 @@ public interface CompositeTerminable extends Terminable, TerminableConsumer, Res
    * a simple implementation for {@link CompositeTerminable}.
    */
   @NoArgsConstructor(access = AccessLevel.PRIVATE)
-  @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
   final class Simple implements CompositeTerminable {
 
     /**
      * the closeables.
      */
-    Deque<AutoCloseable> closeables = new ConcurrentLinkedDeque<>();
+    private final Deque<AutoCloseable> closeables = new ConcurrentLinkedDeque<>();
 
     @Override
     public void close() throws CompositeClosingException {
-      final var caught = new ArrayList<Exception>();
+      final List<Exception> caught = new ArrayList<Exception>();
       AutoCloseable ac;
       while ((ac = this.closeables.poll()) != null) {
         try {
@@ -135,9 +138,9 @@ public interface CompositeTerminable extends Terminable, TerminableConsumer, Res
     @Override
     public void closeSpecific(@NotNull final AutoCloseable closeable)
       throws CompositeClosingException {
-      final var caught = new ArrayList<Exception>();
+      final List<Exception> caught = new ArrayList<Exception>();
       this.closeables.removeIf(c -> {
-          final var check = c.equals(closeable);
+          final boolean check = c.equals(closeable);
           if (check) {
             try {
               c.close();
@@ -162,13 +165,13 @@ public interface CompositeTerminable extends Terminable, TerminableConsumer, Res
     @Override
     public void reset() {
       this.closeables.removeIf(closeable -> {
-          if (!(closeable instanceof Terminable terminable)) {
+          if (!(closeable instanceof Terminable)) {
             return false;
           }
-          if (closeable instanceof Reset reset) {
-            reset.reset();
+          if (closeable instanceof Reset) {
+            ((Reset) closeable).reset();
           }
-          return terminable.closed();
+          return ((Terminable) closeable).closed();
         });
     }
   }

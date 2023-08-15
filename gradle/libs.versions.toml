@@ -1,7 +1,7 @@
-[versions]
-lombok = "1.18.28"
-annotations = "24.0.1"
-
 [libraries]
-lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
-annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
+lombok = { module = "org.projectlombok:lombok", version = "1.18.28" }
+annotations = { module = "org.jetbrains:annotations", version = "24.0.1" }
+
+[plugins]
+spotless = { id = "com.diffplug.spotless", version = "6.20.0" }
+nexus = { id = "io.github.gradle-nexus.publish-plugin", version = "1.3.0" }
